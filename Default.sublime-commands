@@ -1,0 +1,10 @@
+[
+  {
+    "caption": "Github: Open File",
+    "command": "github_open"
+  },
+  {
+    "caption": "Github: Blame",
+    "command": "github_blame"
+  }
+]
