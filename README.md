@@ -11,13 +11,13 @@ Open any directory of your GIT working copy in Sublime Text 2.
 * Press `Ctrl + Shift + P` and select `Github: Open File` or just press `Ctrl + Shift + ^` to open currently edited file in Github.
 * Press `Ctrl + Shift + P` and select `Github: Blame` to open blame for currently edited file in Github.
 
-Use `Cmd` instead of `Ctrl` on Mac OS X.
+Use `Cmd` instead of `Ctrl` on Windows.
 
 ## Get it installed ##
 
 ### With The Package Control Plugin ###
 
-Coming soon
+Press `shift+cmd+p` to open the Command Palette type `pack install`, search for Github Tools and press enter
 
 ### On Mac ###
 
