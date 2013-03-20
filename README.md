@@ -17,7 +17,9 @@ Use `Cmd` instead of `Ctrl` on Mac OS X.
 
 ### With The Package Control Plugin ###
 
-Coming soon
+Press `Ctrl + Shift + P` to open the Command Palette type `pack install`, search for Github Tools and press enter
+
+Use `Cmd` instead of `Ctrl` on Mac OS X.
 
 ### On Mac ###
 
