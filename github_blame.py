@@ -1,5 +1,5 @@
 import sublime, sublime_plugin, webbrowser
-from github import *
+from .github import *
 
 class GithubBlameCommand(GithubWindowCommand):
   @with_repo
