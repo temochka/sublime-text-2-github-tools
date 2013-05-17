@@ -65,9 +65,9 @@ class GitRepo:
 
   def make_repository_url(self, remotes):
     for r in remotes:
-      if r.startswith('git@github.com'):
+      if r.startswith('git@'):
         return r[4:-4].replace(":", "/")
-      elif r.startswith('https://github.com'):
+      elif r.startswith('https://'):
         return r[8:-4].split("@")[-1]
 
 class GithubWindowCommand(sublime_plugin.WindowCommand):
