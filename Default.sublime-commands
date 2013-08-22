@@ -6,5 +6,9 @@
   {
     "caption": "Github: Blame",
     "command": "github_blame"
+  },
+  {
+    "caption": "Github: Copy Link To File",
+    "command": "github_copy_link"
   }
 ]
