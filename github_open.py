@@ -1,5 +1,8 @@
 import sublime, sublime_plugin, webbrowser
-from github import *
+try:
+    from .github import *
+except ValueError:
+    from github import *
 
 
 class GithubOpenCommand(GithubWindowCommand):

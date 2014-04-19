@@ -1,5 +1,8 @@
 import sublime, sublime_plugin
-from github import copy_and_open_default_settings
+try:
+    from .github import copy_and_open_default_settings
+except ValueError:
+    from github import copy_and_open_default_settings
 
 
 class GithubPluginSettings(sublime_plugin.WindowCommand):
