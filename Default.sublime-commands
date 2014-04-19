@@ -10,5 +10,9 @@
   {
     "caption": "Github: Plugin Settings",
     "command": "github_plugin_settings"
+  },
+  {
+    "caption": "Github: Copy Link To File",
+    "command": "github_copy_link"
   }
 ]
