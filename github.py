@@ -116,7 +116,7 @@ class GitRepo(object):
         return {
             'remote_alias': remote_alias,
             'protocol': 'ssh',
-            'web_uri': uri.replace(':/' + account, '').replace(':', ''),
+            'web_uri': uri.replace(':', '/'),
             'remote_uri': remote,
             'repository_name': name,
             'account': account,
