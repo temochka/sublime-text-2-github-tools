@@ -6,5 +6,9 @@
   {
     "caption": "Github: Blame",
     "command": "github_blame"
+  },
+  {
+    "caption": "Github: Plugin Settings",
+    "command": "github_plugin_settings"
   }
 ]
