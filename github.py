@@ -156,6 +156,15 @@ class GitRepo(object):
             self.info['web_uri'], self.path_from_rootdir(filename),
             self.revision)
 
+    def repository_url(self):
+        return git_repository_url(self.info['web_uri'])
+
+    def issues_url(self):
+        return git_issues_url(self.info['web_uri'])
+
+    def pulls_url(self):
+        return git_pulls_url(self.info['web_uri'])
+
     @property
     def name(self):
         return self.info['repository_name']
@@ -226,3 +235,15 @@ def git_browse_file_url(repository, filepath, branch='master'):
 
 def git_blame_file_url(repository, filepath, revision):
     return "https://%s/blame/%s%s" % (repository, revision, filepath)
+
+
+def git_issues_url(repository):
+    return "https://%s/issues" % (repository)
+
+
+def git_pulls_url(repository):
+    return "https://%s/pulls" % (repository)
+
+
+def git_repository_url(repository):
+    return "https://%s" % (repository)

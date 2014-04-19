@@ -14,5 +14,17 @@
   {
     "caption": "Github: Copy Link To File",
     "command": "github_copy_link"
-  }
+  },
+  {
+    "caption": "Github: Repository",
+    "command": "github_repository"
+  },
+  {
+    "caption": "Github: Issues",
+    "command": "github_issues"
+  },
+  {
+    "caption": "Github: Pull Requests",
+    "command": "github_pulls"
+  },
 ]
