@@ -65,7 +65,8 @@ class GitRepo(object):
         rootdir = normpath(self.git("rev-parse --show-toplevel"))
         if self.path != rootdir:
             _, _, path_from_rootdir = self.path.partition(rootdir)
-            return strip_leading_slashes(join(path_from_rootdir, filename))
+            full_path = join(path_from_rootdir, filename.strip('/'))
+            return full_path
         return filename
 
     @property
