@@ -181,7 +181,7 @@ class GithubWindowCommand(sublime_plugin.WindowCommand):
         return filename
 
     def filename(self):
-        if not self.window.active_view():
+        if not self.window.active_view() or self.window.active_view().file_name() is None:
             raise NoFileOpenError
         return self.window.active_view().file_name()
 
