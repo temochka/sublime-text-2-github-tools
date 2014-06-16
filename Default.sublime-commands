@@ -26,5 +26,5 @@
   {
     "caption": "Github: Pull Requests",
     "command": "github_pulls"
-  },
+  }
 ]
