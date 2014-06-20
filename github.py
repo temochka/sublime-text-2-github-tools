@@ -102,11 +102,10 @@ class GitRepo(object):
 
     def parse_remote(self, remote_alias, remote):
         for hostname in github_hostnames:
-          if remote.startswith('git@' + hostname):
-              return self.parse_ssh_remote(remote_alias, remote)
-          elif remote.startswith('https://' + hostname):
-              return self.parse_http_remote(remote_alias, remote)
-          return None
+            if remote.startswith('git@' + hostname):
+                return self.parse_ssh_remote(remote_alias, remote)
+            if remote.startswith('https://' + hostname):
+                return self.parse_http_remote(remote_alias, remote)
 
     def parse_ssh_remote(self, remote_alias, remote):
         uri = remote[4:-4]
