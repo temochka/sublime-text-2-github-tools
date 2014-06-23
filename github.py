@@ -13,6 +13,7 @@ settings = {}
 debug_mode = DEFAULT_SETTINGS['debug_mode']
 github_hostnames = DEFAULT_SETTINGS['github_hostnames']
 
+
 def plugin_loaded():
     global settings, debug_mode, github_hostnames
     settings = sublime.load_settings('Github Tools.sublime-settings')
@@ -25,11 +26,23 @@ def plugin_loaded():
 class NotAGitRepositoryError(Exception):
     pass
 
+
 class NotAGithubRepositoryError(Exception):
     pass
 
+
 class NoFileOpenError(Exception):
     pass
+
+
+class NoRemoteError(Exception):
+    def __init__(self, branch):
+        self.branch = branch
+
+
+class GitCommandError(Exception):
+    pass
+
 
 class GitRepo(object):
     def __init__(self, path):
@@ -38,7 +51,12 @@ class GitRepo(object):
         if not self.is_git():
             raise NotAGitRepositoryError
 
-        self.info = self.get_info()
+        try:
+            remote_alias = self.git('config branch.%s.remote' % self.branch)
+        except GitCommandError:
+            raise NoRemoteError(self.branch)
+
+        self.info = self.get_info(remote_alias)
 
         if not self.info:
             raise NotAGithubRepositoryError
@@ -58,8 +76,9 @@ class GitRepo(object):
                                   (command, self.path))
         return output
 
-    def get_info(self):
-        return self.parse_remotes(self.git("remote -v"))
+    def get_info(self, remote_alias):
+        remote = self.git('config remote.%s.url' % remote_alias)
+        return self.parse_remote(remote_alias, remote)
 
     def path_from_rootdir(self, filename):
         rootdir = normpath(self.git("rev-parse --show-toplevel"))
@@ -77,11 +96,6 @@ class GitRepo(object):
     def revision(self):
         return self.git("rev-parse HEAD")
 
-    def parse_remotes(self, remotes):
-        remotes = map(
-            lambda l: tuple(re.split("\s", l)[0:2]), remotes.splitlines())
-        return self.choose_remote(remotes)
-
     def parse_branch(self, branches):
         p = re.compile("\* (.+)")
         m = p.findall(branches)
@@ -91,14 +105,6 @@ class GitRepo(object):
         os.chdir(self.path)
         code = os.system('git rev-parse')
         return not code
-
-    def choose_remote(self, remotes):
-        for remote_alias, remote in remotes:
-            beanstalk_remote = self.parse_remote(remote_alias, remote)
-            if beanstalk_remote:
-                return beanstalk_remote
-
-        return None
 
     def parse_remote(self, remote_alias, remote):
         for hostname in github_hostnames:
@@ -110,7 +116,6 @@ class GitRepo(object):
 
     def parse_ssh_remote(self, remote_alias, remote):
         uri = remote[4:-4]
-        protocol = 'ssh'
         account = uri.split('/')[-2]
         name = uri.split('/')[-1]
 
@@ -224,9 +229,12 @@ def with_repo(func):
             return func(self, self.repository)
         except (NotAGitRepositoryError, NotAGithubRepositoryError):
             sublime.message_dialog("Github repository not found.")
+        except (NoRemoteError) as e:
+            sublime.message_dialog(
+                "The current branch %s has no upstream branch." % e.branch)
         except (NoFileOpenError):
             sublime.message_dialog("Please open a file first.")
-    
+
     return wrapper
 
 
