@@ -12,7 +12,7 @@ plugin_dir = os.path.abspath(os.path.dirname(__file__))
 settings = {}
 debug_mode = DEFAULT_SETTINGS['debug_mode']
 github_hostnames = DEFAULT_SETTINGS['github_hostnames']
-
+strip_git = lambda r: r.rstrip('.git')
 
 def plugin_loaded():
     global settings, debug_mode, github_hostnames
@@ -114,7 +114,7 @@ class GitRepo(object):
                 return self.parse_http_remote(remote_alias, remote)
 
     def parse_ssh_remote(self, remote_alias, remote):
-        uri = remote[4:-4]
+        uri = strip_git(remote[4:])
         account = uri.split('/')[-2]
         name = uri.split('/')[-1]
 
@@ -131,7 +131,7 @@ class GitRepo(object):
 
     def parse_http_remote(self, remote_alias, remote):
         remote_uri = remote[8:].split("@")[-1]
-        uri = remote[8:-4]
+        uri = strip_git(remote[8:])
         web_uri = uri.split("@")[-1]
         name = web_uri.split('/')[-1]
         account = web_uri.split('/')[-2]
