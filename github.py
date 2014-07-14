@@ -49,7 +49,7 @@ class GitRepo(object):
         self.path = path
 
         if not self.is_git():
-            raise NotAGitRepositoryError
+            raise NotAGitRepositoryError("No repository at '%s'" % self.path)
 
         try:
             remote_alias = self.git('config branch.%s.remote' % self.branch)
@@ -59,7 +59,7 @@ class GitRepo(object):
         self.info = self.get_info(remote_alias)
 
         if not self.info:
-            raise NotAGithubRepositoryError
+            raise NotAGithubRepositoryError("Failed to read url of remote '%s'" % remote_alias)
 
         log("Parsed GIT repo: ", pformat(self.info))
 
@@ -110,7 +110,7 @@ class GitRepo(object):
         for hostname in github_hostnames:
             if remote.startswith('git@' + hostname):
                 return self.parse_ssh_remote(remote_alias, remote)
-            if remote.startswith('https://' + hostname):
+            if remote.startswith('https://' + hostname) or remote.startswith('http://' + hostname):
                 return self.parse_http_remote(remote_alias, remote)
 
     def parse_ssh_remote(self, remote_alias, remote):
@@ -130,8 +130,11 @@ class GitRepo(object):
         }
 
     def parse_http_remote(self, remote_alias, remote):
-        remote_uri = remote[8:].split("@")[-1]
-        uri = strip_git(remote[8:])
+        cut_left = 8
+        if remote.startswith('http:'):
+            cut_left = 7
+        remote_uri = remote[cut_left:].split("@")[-1]
+        uri = strip_git(remote[cut_left:])
         web_uri = uri.split("@")[-1]
         name = web_uri.split('/')[-1]
         account = web_uri.split('/')[-2]
@@ -226,8 +229,8 @@ def with_repo(func):
     def wrapper(self):
         try:
             return func(self, self.repository)
-        except (NotAGitRepositoryError, NotAGithubRepositoryError):
-            sublime.message_dialog("Github repository not found.")
+        except (NotAGitRepositoryError, NotAGithubRepositoryError) as err:
+            sublime.message_dialog("Github repository not found: %s" % err)
         except (NoRemoteError) as e:
             sublime.message_dialog(
                 "The current branch %s has no upstream branch." % e.branch)
