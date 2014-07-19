@@ -12,7 +12,6 @@ plugin_dir = os.path.abspath(os.path.dirname(__file__))
 settings = {}
 debug_mode = DEFAULT_SETTINGS['debug_mode']
 github_hostnames = DEFAULT_SETTINGS['github_hostnames']
-strip_git = lambda r: r.rstrip('.git')
 
 def plugin_loaded():
     global settings, debug_mode, github_hostnames
@@ -110,7 +109,7 @@ class GitRepo(object):
                 return self.parse_http_remote(remote_alias, remote)
 
     def parse_ssh_remote(self, remote_alias, remote):
-        uri = strip_git(remote[4:])
+        uri = strip_suffix(remote[4:], '.git')
         account = uri.split('/')[-2]
         name = uri.split('/')[-1]
 
@@ -130,7 +129,7 @@ class GitRepo(object):
         if remote.startswith('http:'):
             cut_left = 7
         remote_uri = remote[cut_left:].split("@")[-1]
-        uri = strip_git(remote[cut_left:])
+        uri = strip_suffix(remote[cut_left:], '.git')
         web_uri = uri.split("@")[-1]
         name = web_uri.split('/')[-1]
         account = web_uri.split('/')[-2]
@@ -196,6 +195,12 @@ class GithubWindowCommand(sublime_plugin.WindowCommand):
     @property
     def repository(self):
         return GitRepo(self.rootdir())
+
+
+def strip_suffix(txt, suffix):
+    if txt.endswith(suffix):
+        return txt[:-len(suffix)]
+    return txt
 
 
 def log(*lines):
