@@ -7,6 +7,7 @@ except ValueError:
 
 class GithubCopyLinkCommand(GithubWindowCommand):
 
+    @require_file
     @with_repo
     def run(self, repo):
         sublime.status_message("Copied URL to clipboard")

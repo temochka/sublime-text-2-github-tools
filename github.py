@@ -31,10 +31,6 @@ class NotAGithubRepositoryError(Exception):
     pass
 
 
-class NoFileOpenError(Exception):
-    pass
-
-
 class NoRemoteError(Exception):
     def __init__(self, branch):
         self.branch = branch
@@ -177,17 +173,22 @@ class GitRepo(object):
 
 class GithubWindowCommand(sublime_plugin.WindowCommand):
     def rootdir(self):
-        folders = self.window.folders()
-        return [i for i in folders if self.filename().startswith(i + os.sep)][0]
+        if self.filename():
+            return dirname(self.filename())
+        return self.first_folder()
+
+    def first_folder(self):
+        print(self.window.folders())
+        return self.window.folders()[0]
 
     def relative_filename(self):
         _, _, filename = self.filename().partition(self.rootdir())
         return filename
 
     def filename(self):
-        if not self.window.active_view() or self.window.active_view().file_name() is None:
-            raise NoFileOpenError
-        return self.window.active_view().file_name()
+        if self.window.active_view():
+            return self.window.active_view().file_name()
+        return None
 
     @property
     def repository(self):
@@ -221,6 +222,15 @@ def extract_http_auth_credentials(uri):
     return (username, password)
 
 
+def require_file(func):
+    @wraps(func)
+    def wrapper(self):
+        if self.filename():
+            return func(self)
+        sublime.message_dialog("Please open a file first.")
+    return wrapper
+
+
 def with_repo(func):
     @wraps(func)
     def wrapper(self):
@@ -231,8 +241,6 @@ def with_repo(func):
         except (NoRemoteError) as e:
             sublime.message_dialog(
                 "The current branch %s has no upstream branch." % e.branch)
-        except (NoFileOpenError):
-            sublime.message_dialog("Please open a file first.")
 
     return wrapper
 
