@@ -31,21 +31,21 @@ Use `Cmd` instead of `Ctrl` on Mac OS X.
 
 ```bash
 cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/
-git clone git://github.com/temochka/sublime-text-2-github.git
+git clone git://github.com/temochka/sublime-text-2-github-tools.git
 ```
 
 ### On Linux ###
 
 ```bash
 cd ~/.config/sublime-text-2/Packages/
-git clone git://github.com/temochka/sublime-text-2-github.git
+git clone git://github.com/temochka/sublime-text-2-github-tools.git
 ```
 
 ### On Windows ###
 
 ```
 cd %APPDATA%/Sublime Text 2/Packages/
-git clone git://github.com/temochka/sublime-text-2-github.git
+git clone git://github.com/temochka/sublime-text-2-github-tools.git
 ```
 
 Make sure you have included all required binaries (`git`) in your PATH.
