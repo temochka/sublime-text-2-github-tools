@@ -26,5 +26,9 @@
   {
     "caption": "Github: Pull Requests",
     "command": "github_pulls"
+  },
+  {
+    "caption": "Github: Create Pull Request",
+    "command": "github_create_pr"
   }
 ]
