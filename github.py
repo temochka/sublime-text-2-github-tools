@@ -170,7 +170,7 @@ class GitRepo(object):
             self.info['web_uri'], self.path_from_rootdir(filename),
             self.revision)
 
-    def repositoryry_url(self):
+    def repository_url(self):
         return git_repository_url(self.info['web_uri'])
 
     def issues_url(self):
