@@ -9,7 +9,7 @@ class GithubCreatePrCommand(GithubWindowCommand):
   @with_repo
   def run(self, repo):
     self.remotes      = repo.remotes
-    self.remote_names = self.remotes.keys()
+    self.remote_names = list(self.remotes.keys())
     self.repo         = repo
     self.window.show_quick_panel(self.remote_names, self.remote_selected)
 
