@@ -96,17 +96,6 @@ class GitRepo(object):
         m = p.findall(branches)
         return m[0] if m else None
 
-    @property
-    def remotes(self):
-        result = dict()
-        for line in self.git("remote -v").split("\n"):
-            parts = re.split("\s+", line)
-            name  = parts[0]
-            url   = parts[1]
-            result[name] = url
-
-        return result
-
     def is_git(self):
         os.chdir(self.path)
         code = os.system('git rev-parse')
