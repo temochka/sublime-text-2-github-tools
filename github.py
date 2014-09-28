@@ -272,5 +272,6 @@ def git_pulls_url(repository):
 def git_repository_url(repository):
     return "https://%s" % (repository)
 
+
 def git_compare_url(repository, branch):
     return "https://%s/compare/%s?expand=1" % (repository, branch)
