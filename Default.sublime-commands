@@ -30,5 +30,9 @@
   {
     "caption": "Github: Create Pull Request",
     "command": "github_create_pr"
+  },
+  {
+    "caption": "Github: Open File History",
+    "command": "github_file_history"
   }
 ]

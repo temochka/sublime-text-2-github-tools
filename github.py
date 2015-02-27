@@ -153,6 +153,10 @@ class GitRepo(object):
     def browse_file_url(self, filename):
         return git_browse_file_url(self.info['web_uri'],
                                    self.path_from_rootdir(filename), self.branch)
+    
+    def file_history_url(self, filename):
+        return git_file_history_url(self.info['web_uri'],
+                                   self.path_from_rootdir(filename), self.branch)
 
     def blame_file_url(self, filename):
         return git_blame_file_url(
@@ -256,6 +260,8 @@ def with_repo(func):
 def git_browse_file_url(repository, filepath, branch='master'):
     return "https://%s/blob/%s%s" % (repository, branch, filepath)
 
+def git_file_history_url(repository, filepath, branch='master'):
+    return "https://%s/commits/%s%s" % (repository, branch, filepath)
 
 def git_blame_file_url(repository, filepath, revision):
     return "https://%s/blame/%s%s" % (repository, revision, filepath)
