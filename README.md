@@ -12,6 +12,7 @@ Open any directory of your GIT working copy in Sublime Text.
 
 * Press `Ctrl + Shift + P` and select `Github: Open File` or just press `Ctrl + Shift + ^` to open currently edited file on Github.
 * Press `Ctrl + Shift + P` and select `Github: Blame` to open blame for currently edited file on Github.
+* Press `Ctrl + Shift + P` and select `Github: History` to open commit history for currently edited file on Github.
 * Press `Ctrl + Shift + P` and select `Github: Copy Link To File` to save a Github link to a selected code fragment in the system clipboard.
 * Press `Ctrl + Shift + P` and select `Github: Repository` to open repository page on Github.
 * Press `Ctrl + Shift + P` and select `Github: Issues` to open repository issues page on Github.

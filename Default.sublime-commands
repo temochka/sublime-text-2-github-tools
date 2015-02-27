@@ -32,7 +32,7 @@
     "command": "github_create_pr"
   },
   {
-    "caption": "Github: Open File History",
+    "caption": "Github: History",
     "command": "github_file_history"
   }
 ]
