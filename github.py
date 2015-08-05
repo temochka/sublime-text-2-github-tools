@@ -1,4 +1,5 @@
 import sublime, sublime_plugin, re, os, json
+import urllib.parse as urllib
 from os.path import dirname, normpath, join
 from functools import wraps
 from pprint import pformat
@@ -254,7 +255,7 @@ def with_repo(func):
 
 
 def git_browse_file_url(repository, filepath, branch='master'):
-    return "https://%s/blob/%s%s" % (repository, branch, filepath)
+    return "https://%s/blob/%s%s" % (repository, urllib.quote(branch), filepath)
 
 
 def git_blame_file_url(repository, filepath, revision):
@@ -274,4 +275,4 @@ def git_repository_url(repository):
 
 
 def git_compare_url(repository, branch):
-    return "https://%s/compare/%s?expand=1" % (repository, branch)
+    return "https://%s/compare/%s?expand=1" % (repository, urllib.quote(branch))
