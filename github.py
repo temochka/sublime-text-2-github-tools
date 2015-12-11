@@ -81,7 +81,7 @@ class GitRepo(object):
         if self.path != rootdir:
             _, _, path_from_rootdir = self.path.partition(rootdir)
             full_path = join(path_from_rootdir, filename.strip('/'))
-            return full_path
+            return "/"+full_path
         return filename
 
     @property
@@ -154,7 +154,7 @@ class GitRepo(object):
     def browse_file_url(self, filename):
         return git_browse_file_url(self.info['web_uri'],
                                    self.path_from_rootdir(filename), self.branch)
-    
+
     def file_history_url(self, filename):
         return git_file_history_url(self.info['web_uri'],
                                    self.path_from_rootdir(filename), self.branch)
