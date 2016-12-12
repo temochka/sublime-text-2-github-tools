@@ -1,5 +1,8 @@
 import sublime, sublime_plugin, re, os, json
-import urllib.parse as urllib
+try:
+    import urllib.parse as urllib
+except ImportError:
+    import urllib
 from os.path import dirname, normpath, join
 from functools import wraps
 from pprint import pformat
