@@ -9,4 +9,4 @@ class GithubOpenCommand(GithubWindowCommand):
     @require_file
     @with_repo
     def run(self, repo):
-        webbrowser.open_new_tab(repo.browse_file_url(self.relative_filename()))
+        sublime.active_window().run_command('open_url', {"url": repo.browse_file_url(self.relative_filename())})
