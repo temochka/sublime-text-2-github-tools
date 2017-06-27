@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, webbrowser
+import sublime, sublime_plugin
 try:
     from .github import *
 except ValueError:
@@ -9,4 +9,4 @@ class GithubOpenCommand(GithubWindowCommand):
     @require_file
     @with_repo
     def run(self, repo):
-        webbrowser.open_new_tab(repo.browse_file_url(self.relative_filename()))
+      open_url(repo.browse_file_url(self.relative_filename()))

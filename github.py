@@ -22,7 +22,6 @@ def plugin_loaded():
     if settings.get('github_hostnames'):
         github_hostnames = settings.get('github_hostnames')
 
-
 class NotAGitRepositoryError(Exception):
     pass
 
@@ -154,7 +153,7 @@ class GitRepo(object):
     def browse_file_url(self, filename):
         return git_browse_file_url(self.info['web_uri'],
                                    self.path_from_rootdir(filename), self.branch)
-    
+
     def file_history_url(self, filename):
         return git_file_history_url(self.info['web_uri'],
                                    self.path_from_rootdir(filename), self.branch)
@@ -282,3 +281,6 @@ def git_repository_url(repository):
 
 def git_compare_url(repository, branch):
     return "https://%s/compare/%s?expand=1" % (repository, urllib.quote(branch))
+
+def open_url(url):
+    sublime.active_window().run_command('open_url', {"url": url})
