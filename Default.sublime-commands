@@ -49,7 +49,7 @@
     "command": "github_create_pr"
   },
   {
-    "caption": "Github: History",
+    "caption": "Github: File History",
     "command": "github_file_history"
   }
 ]
