@@ -8,8 +8,13 @@
     "command": "github_blame"
   },
   {
-    "caption": "Github: Plugin Settings",
-    "command": "github_plugin_settings"
+    "caption": "Preferences: GitHub Tools",
+    "command": "edit_settings",
+    "args":
+    {
+      "base_file": "${packages}/GitHub Tools/GitHub Tools.sublime-settings",
+      "default": "// GitHub Tools Settings - User\n{\n\t$0\n}\n"
+    }
   },
   {
     "caption": "Github: Copy Link To File",

@@ -1,4 +1,3 @@
-import json
 import os
 import re
 import sublime
@@ -8,25 +7,6 @@ import urllib.parse as urllib
 from os.path import dirname, normpath, join, realpath
 from functools import wraps
 from pprint import pformat
-
-DEFAULT_SETTINGS = {
-    'debug_mode': False,
-    'github_hostnames': ['github.com']
-}
-
-plugin_dir = os.path.abspath(os.path.dirname(__file__))
-settings = {}
-debug_mode = DEFAULT_SETTINGS['debug_mode']
-github_hostnames = DEFAULT_SETTINGS['github_hostnames']
-
-
-def plugin_loaded():
-    global settings, debug_mode, github_hostnames
-    settings = sublime.load_settings('Github Tools.sublime-settings')
-    if settings.get('debug_mode'):
-        debug_mode = settings.get('debug_mode')
-    if settings.get('github_hostnames'):
-        github_hostnames = settings.get('github_hostnames')
 
 
 class NotAGitRepositoryError(Exception):
@@ -110,7 +90,9 @@ class GitRepo(object):
         return not code
 
     def parse_remote(self, remote_alias, remote):
-        for hostname in github_hostnames:
+        settings = sublime.load_settings("GitHub Tools.sublime-settings")
+        hosts = settings.get('github_hostnames')
+        for hostname in hosts:
             if remote.startswith('git@' + hostname):
                 return self.parse_ssh_remote(remote_alias, remote)
             if remote.startswith('https://' + hostname) or remote.startswith(
@@ -228,23 +210,12 @@ def strip_suffix(txt, suffix):
 
 
 def log(*lines):
-    if not debug_mode:
+    settings = sublime.load_settings("GitHub Tools.sublime-settings")
+    if not settings.get('debug_mode'):
         return
 
     for line in lines:
         print(line)
-
-
-def copy_and_open_default_settings():
-    user_settings_path = join(sublime.packages_path(), 'User',
-                              'Github Tools.sublime-settings')
-
-    if not os.path.exists(user_settings_path):
-        with open(user_settings_path, 'w') as f:
-            json.dump(DEFAULT_SETTINGS, f, sort_keys=True,
-                      indent=4, separators=(',', ': '))
-
-    sublime.active_window().open_file(user_settings_path)
 
 
 def extract_http_auth_credentials(uri):

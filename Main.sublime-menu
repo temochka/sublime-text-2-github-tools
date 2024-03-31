@@ -1,0 +1,29 @@
+[
+	{
+		"caption": "Preferences",
+		"id": "preferences",
+		"mnemonic": "n",
+		"children": [
+			{
+				"caption": "Package Settings",
+				"id": "package-settings",
+				"mnemonic": "P",
+				"children": [
+					{
+						"caption": "GitHub Tools",
+						"children": [
+							{
+								"caption": "Settings",
+								"command": "edit_settings", "args":
+								{
+									"base_file": "${packages}/GitHub Tools/GitHub Tools.sublime-settings",
+									"default": "// GitHub Tools Settings - User\n{\n\t$0\n}\n"
+								}
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+]
