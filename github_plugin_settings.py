@@ -1,4 +1,4 @@
-import sublime, sublime_plugin
+import sublime_plugin
 try:
     from .github import copy_and_open_default_settings
 except ValueError:

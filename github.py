@@ -1,5 +1,10 @@
-import sublime, sublime_plugin, re, os, json
+import json
+import os
+import re
+import sublime
+import sublime_plugin
 import urllib.parse as urllib
+
 from os.path import dirname, normpath, join, realpath
 from functools import wraps
 from pprint import pformat
@@ -14,6 +19,7 @@ settings = {}
 debug_mode = DEFAULT_SETTINGS['debug_mode']
 github_hostnames = DEFAULT_SETTINGS['github_hostnames']
 
+
 def plugin_loaded():
     global settings, debug_mode, github_hostnames
     settings = sublime.load_settings('Github Tools.sublime-settings')
@@ -21,6 +27,7 @@ def plugin_loaded():
         debug_mode = settings.get('debug_mode')
     if settings.get('github_hostnames'):
         github_hostnames = settings.get('github_hostnames')
+
 
 class NotAGitRepositoryError(Exception):
     pass
@@ -54,7 +61,8 @@ class GitRepo(object):
         self.info = self.get_info(remote_alias)
 
         if not self.info:
-            raise NotAGithubRepositoryError("Failed to read url of remote '%s'" % remote_alias)
+            raise NotAGithubRepositoryError(
+                "Failed to read url of remote '%s'" % remote_alias)
 
         log("Parsed GIT repo: ", pformat(self.info))
 
@@ -105,7 +113,8 @@ class GitRepo(object):
         for hostname in github_hostnames:
             if remote.startswith('git@' + hostname):
                 return self.parse_ssh_remote(remote_alias, remote)
-            if remote.startswith('https://' + hostname) or remote.startswith('http://' + hostname):
+            if remote.startswith('https://' + hostname) or remote.startswith(
+                    'http://' + hostname):
                 return self.parse_http_remote(remote_alias, remote)
 
     def parse_ssh_remote(self, remote_alias, remote):
@@ -152,11 +161,13 @@ class GitRepo(object):
 
     def browse_file_url(self, filename):
         return git_browse_file_url(self.info['web_uri'],
-                                   self.path_from_rootdir(filename), self.branch)
+                                   self.path_from_rootdir(filename),
+                                   self.branch)
 
     def file_history_url(self, filename):
         return git_file_history_url(self.info['web_uri'],
-                                   self.path_from_rootdir(filename), self.branch)
+                                    self.path_from_rootdir(filename),
+                                    self.branch)
 
     def blame_file_url(self, filename):
         return git_blame_file_url(
@@ -258,10 +269,14 @@ def with_repo(func):
 
 
 def git_browse_file_url(repository, filepath, branch='master'):
-    return "https://%s/blob/%s%s" % (repository, urllib.quote(branch), filepath)
+    return "https://%s/blob/%s%s" % (
+        repository, urllib.quote(branch), filepath)
+
 
 def git_file_history_url(repository, filepath, branch='master'):
-    return "https://%s/commits/%s%s" % (repository, branch, filepath)
+    return "https://%s/commits/%s%s" % (
+        repository, urllib.quote(branch), filepath)
+
 
 def git_blame_file_url(repository, filepath, revision):
     return "https://%s/blame/%s%s" % (repository, revision, filepath)
@@ -280,7 +295,9 @@ def git_repository_url(repository):
 
 
 def git_compare_url(repository, branch):
-    return "https://%s/compare/%s?expand=1" % (repository, urllib.quote(branch))
+    return "https://%s/compare/%s?expand=1" % (
+        repository, urllib.quote(branch))
+
 
 def open_url(url):
     sublime.active_window().run_command('open_url', {"url": url})

@@ -1,4 +1,3 @@
-import sublime, sublime_plugin
 try:
     from .github import *
 except ValueError:
