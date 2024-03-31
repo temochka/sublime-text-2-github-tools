@@ -152,10 +152,12 @@ class GitRepo(object):
                                     self.path_from_rootdir(filename),
                                     self.branch)
 
-    def blame_file_url(self, filename, linenumber):
+    def blame_file_url(self, filename, range):
         return git_blame_file_url(
-            self.info['web_uri'], self.path_from_rootdir(filename),
-            self.revision, linenumber)
+            self.info['web_uri'],
+            self.path_from_rootdir(filename),
+            self.revision,
+            range)
 
     def repository_url(self):
         return git_repository_url(self.info['web_uri'])
@@ -190,12 +192,14 @@ class GithubWindowCommand(sublime_plugin.WindowCommand):
             return self.window.active_view().file_name()
         return None
 
-    def current_line_number(self):
+    def current_lines(self):
         view = self.window.active_view()
         if view:
             selections = self.window.active_view().sel()
             for selection in selections:
-                return view.rowcol(selection.a)[0] + 1
+                return (
+                    view.rowcol(view.sel()[0].begin())[0] + 1,
+                    view.rowcol(view.sel()[0].end())[0] + 1)
         return None
 
     @property
@@ -248,44 +252,46 @@ def with_repo(func):
     return wrapper
 
 
-def git_browse_file_url(repository, filepath, branch='master', linenumber=False):
-    return "https://%s/blob/%s%s%s" % (
-        repository,
+def git_browse_file_url(repo, filepath, branch='master', range=None):
+    return "https://{}/blob/{}{}{}{}".format(
+        repo,
         urllib.quote(branch),
         filepath,
-        "#L"+str(linenumber) if linenumber else '',
+        "#L"+str(range[0]) if range else '',
+        "-L"+str(range[1]) if range else ''
     )
 
 
-def git_file_history_url(repository, filepath, branch='master'):
-    return "https://%s/commits/%s%s" % (
-        repository, urllib.quote(branch), filepath)
+def git_file_history_url(repo, filepath, branch='master'):
+    return "https://{}/commits/{}{}".format(
+        repo, urllib.quote(branch), filepath)
 
 
-def git_blame_file_url(repository, filepath, revision, linenumber=False):
-    return "https://%s/blame/%s%s%s" % (
-        repository,
+def git_blame_file_url(repo, filepath, revision, range=None):
+    return "https://{}/blame/{}{}{}{}".format(
+        repo,
         revision,
         filepath,
-        "#L"+str(linenumber) if linenumber else '',
+        "#L"+str(range[0]) if range else '',
+        "-L"+str(range[1]) if range else ''
     )
 
 
-def git_issues_url(repository):
-    return "https://%s/issues" % (repository)
+def git_issues_url(repo):
+    return "https://{}/issues".format(repo)
 
 
-def git_pulls_url(repository):
-    return "https://%s/pulls" % (repository)
+def git_pulls_url(repo):
+    return "https://{}/pulls".format(repo)
 
 
-def git_repository_url(repository):
-    return "https://%s" % (repository)
+def git_repository_url(repo):
+    return "https://{}".format(repo)
 
 
-def git_compare_url(repository, branch):
-    return "https://%s/compare/%s?expand=1" % (
-        repository, urllib.quote(branch))
+def git_compare_url(repo, branch):
+    return "https://{}/compare/{}?expand=1".format(
+        repo, urllib.quote(branch))
 
 
 def open_url(url):

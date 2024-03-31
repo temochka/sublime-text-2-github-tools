@@ -1,13 +1,5 @@
 [
   {
-    "caption": "Github: Open File",
-    "command": "github_open"
-  },
-  {
-    "caption": "Github: Blame",
-    "command": "github_blame"
-  },
-  {
     "caption": "Preferences: GitHub Tools",
     "command": "edit_settings",
     "args":
@@ -17,8 +9,28 @@
     }
   },
   {
-    "caption": "Github: Copy Link To File",
+    "caption": "Github: Open File",
+    "command": "github_open"
+  },
+  {
+    "caption": "Github: Open File at This Line",
+    "command": "github_open_line"
+  },
+  {
+    "caption": "Github: Blame",
+    "command": "github_blame"
+  },
+  {
+    "caption": "Github: Blame at This Line",
+    "command": "github_blame_line"
+  },
+  {
+    "caption": "Github: Copy Link to File",
     "command": "github_copy_link"
+  },
+  {
+    "caption": "Github: Copy Link to File at This Line",
+    "command": "github_copy_link_line"
   },
   {
     "caption": "Github: Repository",
