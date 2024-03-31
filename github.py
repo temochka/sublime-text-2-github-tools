@@ -208,6 +208,14 @@ class GithubWindowCommand(sublime_plugin.WindowCommand):
             return self.window.active_view().file_name()
         return None
 
+    def current_line_number(self):
+        view = self.window.active_view()
+        if view:
+            selections = self.window.active_view().sel()
+            for selection in selections:
+                return view.rowcol(selection.a)[0] + 1
+        return None
+
     @property
     def repository(self):
         return GitRepo(self.rootdir())
