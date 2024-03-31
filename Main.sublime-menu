@@ -1,8 +1,61 @@
 [
 	{
+		"id": "tools",
+		"children": [
+			{
+				"caption": "GitHub Tools",
+				"children": [
+					{
+						"caption": "Open File",
+						"command": "github_open"
+					},
+					{
+						"caption": "Open File at This Line",
+						"command": "github_open_line"
+					},
+					{
+						"caption": "Blame",
+						"command": "github_blame"
+					},
+					{
+						"caption": "Blame at This Line",
+						"command": "github_blame_line"
+					},
+					{
+						"caption": "Copy Link to File",
+						"command": "github_copy_link"
+					},
+					{
+						"caption": "Copy Link to File at This Line",
+						"command": "github_copy_link_line"
+					},
+					{
+						"caption": "Repository",
+						"command": "github_repository"
+					},
+					{
+						"caption": "Issues",
+						"command": "github_issues"
+					},
+					{
+						"caption": "Pull Requests",
+						"command": "github_pulls"
+					},
+					{
+						"caption": "Create Pull Request",
+						"command": "github_create_pr"
+					},
+					{
+						"caption": "File History",
+						"command": "github_file_history"
+					}
+				]
+			}
+		]
+	},
+	{
 		"caption": "Preferences",
 		"id": "preferences",
-		"mnemonic": "n",
 		"children": [
 			{
 				"caption": "Package Settings",
