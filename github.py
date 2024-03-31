@@ -159,20 +159,21 @@ class GitRepo(object):
         f = lambda l: tuple(re.split("\s", l.replace('refs/heads/', ''))[::-1])
         return dict(map(f, heads.splitlines()))
 
-    def browse_file_url(self, filename):
+    def browse_file_url(self, filename, linenumber=False):
         return git_browse_file_url(self.info['web_uri'],
                                    self.path_from_rootdir(filename),
-                                   self.branch)
+                                   self.branch,
+                                   linenumber)
 
     def file_history_url(self, filename):
         return git_file_history_url(self.info['web_uri'],
                                     self.path_from_rootdir(filename),
                                     self.branch)
 
-    def blame_file_url(self, filename):
+    def blame_file_url(self, filename, linenumber):
         return git_blame_file_url(
             self.info['web_uri'], self.path_from_rootdir(filename),
-            self.revision)
+            self.revision, linenumber)
 
     def repository_url(self):
         return git_repository_url(self.info['web_uri'])
@@ -268,9 +269,13 @@ def with_repo(func):
     return wrapper
 
 
-def git_browse_file_url(repository, filepath, branch='master'):
-    return "https://%s/blob/%s%s" % (
-        repository, urllib.quote(branch), filepath)
+def git_browse_file_url(repository, filepath, branch='master', linenumber=False):
+    return "https://%s/blob/%s%s%s" % (
+        repository,
+        urllib.quote(branch),
+        filepath,
+        "#L"+str(linenumber) if linenumber else '',
+    )
 
 
 def git_file_history_url(repository, filepath, branch='master'):
@@ -278,8 +283,13 @@ def git_file_history_url(repository, filepath, branch='master'):
         repository, urllib.quote(branch), filepath)
 
 
-def git_blame_file_url(repository, filepath, revision):
-    return "https://%s/blame/%s%s" % (repository, revision, filepath)
+def git_blame_file_url(repository, filepath, revision, linenumber=False):
+    return "https://%s/blame/%s%s%s" % (
+        repository,
+        revision,
+        filepath,
+        "#L"+str(linenumber) if linenumber else '',
+    )
 
 
 def git_issues_url(repository):
