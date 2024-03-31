@@ -1,6 +1,6 @@
 import sublime, sublime_plugin, re, os, json
 import urllib.parse as urllib
-from os.path import dirname, normpath, join
+from os.path import dirname, normpath, join, realpath
 from functools import wraps
 from pprint import pformat
 
@@ -41,7 +41,7 @@ class GitCommandError(Exception):
 
 class GitRepo(object):
     def __init__(self, path):
-        self.path = path
+        self.path = realpath(path)
 
         if not self.is_git():
             raise NotAGitRepositoryError("No repository at '%s'" % self.path)
