@@ -1,0 +1,36 @@
+[
+	{
+		"id": "gh_tools",
+		"caption": "GitHub Tools",
+		"children": [
+			{
+				"caption": "Open File",
+				"command": "github_open"
+			},
+			{
+				"caption": "Open File at This Line",
+				"command": "github_open_line"
+			},
+			{
+				"caption": "Blame",
+				"command": "github_blame"
+			},
+			{
+				"caption": "Blame at This Line",
+				"command": "github_blame_line"
+			},
+			{
+				"caption": "Copy Link to File",
+				"command": "github_copy_link"
+			},
+			{
+				"caption": "Copy Link to File at This Line",
+				"command": "github_copy_link_line"
+			},
+			{
+				"caption": "File History",
+				"command": "github_file_history"
+			}
+		]
+	}
+]

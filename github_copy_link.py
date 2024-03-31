@@ -1,4 +1,5 @@
 import sublime
+
 try:
     from .github import *
 except ValueError:

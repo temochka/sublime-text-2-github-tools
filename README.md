@@ -20,6 +20,16 @@ Open any directory of your GIT working copy in Sublime Text.
 
 Use `Cmd` instead of `Ctrl` on Mac OS X.
 
+## Settings
+
+- debug_mode: enable debug mode (default: false)
+- github_hostnames: add altenative github host names (default: github.com)
+
+To disable the context menu:
+- create a new file called `Context.sublime-menu` in `Packages/GitHub Tools/` (go there via "Browse Packages" in the settings menu)
+- add `[]` as the content of this new file
+- this effectively replaces the context menu items for this package with "nothing"
+
 ## Get it installed ##
 
 ### With The Package Control Plugin ###
