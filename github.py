@@ -36,7 +36,8 @@ class GitRepo(object):
         try:
             remote_alias = self.git('config branch.%s.remote' % self.branch)
         except GitCommandError:
-            raise NoRemoteError(self.branch)
+            remote_alias = self.git('remote | head -n 1')
+            sublime.status_message('Branch has no remote, trying %s' % remote_alias)
 
         self.info = self.get_info(remote_alias)
 
