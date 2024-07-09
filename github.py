@@ -17,11 +17,6 @@ class NotAGithubRepositoryError(Exception):
     pass
 
 
-class NoRemoteError(Exception):
-    def __init__(self, branch):
-        self.branch = branch
-
-
 class GitCommandError(Exception):
     pass
 
@@ -246,9 +241,6 @@ def with_repo(func):
             return func(self, self.repository)
         except (NotAGitRepositoryError, NotAGithubRepositoryError) as err:
             sublime.message_dialog("Github repository not found: %s" % err)
-        except (NoRemoteError) as e:
-            sublime.message_dialog(
-                "The current branch %s has no upstream branch." % e.branch)
 
     return wrapper
 
