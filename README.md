@@ -1,5 +1,7 @@
 # Github Tools for Sublime Text #
 
+**Warning!** This project is abandoned. See [braver/GitHubTools](https://github.com/braver/GitHubTools) for the actively maintained fork.
+
 ## Introduction ##
 
 A set of handy tools for using Sublime Text editor with [Github](http://github.com). It was initially developed for Sublime Text 2, but now also supports Sublime Text 3 Beta.
@@ -23,6 +25,8 @@ Use `Cmd` instead of `Ctrl` on Mac OS X.
 ## Get it installed ##
 
 ### With The Package Control Plugin ###
+
+**Warning!** This will install [braver/GitHubTools](https://github.com/braver/GitHubTools), the actively maintained fork of this project.
 
 Press `Ctrl + Shift + P` to open the Command Palette type `pack install`, search for Github Tools and press enter.
 
